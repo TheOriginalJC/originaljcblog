@@ -14,19 +14,19 @@ Answer. Primarily for educational purposes.
 
 The act of learning new things well enough to write about them is far more effective than simply reading and hoping enough sticks, as demonstrated below.
 
-![A stick person reading a book "How to swim"](/hello-world/01.png)
-![A stick person happily jumping into the deep end of a swimming pool](/hello-world/02.png)
-![hilarious"](/hello-world/03.png)
+![A stick person reading a book "How to swim"](hello-world/01.png)
+![A stick person happily jumping into the deep end of a swimming pool](hello-world/02.png)
+![hilarious"](hello-world/03.png)
 
 The various models of learning created by educational psychologists support that theory. If we focus on just one model, Bloom's Taxonomy, the closer you get to the top, the dirtier your hands get (a motto for politicians?).
 
-![Bloom's taxonomy as a triangle"](/hello-world/bloomstaxonomy.JPG)
+![Bloom's taxonomy as a triangle"](hello-world/bloomstaxonomy.JPG)
 
 Bloom's Taxonomy was created in the 40's/50's and revised in the noughties. Although it's been a favorite in some circles for decades, it does receive some criticism, one being that there is an implied start and end point. In reality, I suspect the most successful learners bounce around a bit, starting at the bottom, working their way up a bit, then going back and working on weaker area's, building a more complete knowledge set each time.
 
 It might make more sense if the model was a circle, or a set of fully connected nodes, but when we look at other models of learning, it appears educational psychologists just love their triangles.
 
-![Bloom's taxonomy, Dreyfus model of skill acquisition, and 4 stages of competence all modelled as triangles"](/hello-world/allthetriangles.JPG)
+![Bloom's taxonomy, Dreyfus model of skill acquisition, and 4 stages of competence all modelled as triangles"](hello-world/allthetriangles.JPG)
 
 What does this have to do with anything?
 -------
