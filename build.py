@@ -1,69 +1,80 @@
-import os
 import shutil
 import markdown
 import yaml
 from pathlib import Path
 
-# Paths
 CONTENT_DIR = Path("content")
 OUTPUT_DIR = Path("dist")
-TEMPLATE_DIR = Path("templates")
+TEMPLATES_DIR = Path("templates")
 STATIC_DIR = Path("static")
 
-# Load header and footer templates
-header = (TEMPLATE_DIR / "header.html").read_text()
-footer = (TEMPLATE_DIR / "footer.html").read_text()
-
-# Clean output folder
-if OUTPUT_DIR.exists():
-    shutil.rmtree(OUTPUT_DIR)
-OUTPUT_DIR.mkdir()
-
-# Copy static assets into site root
-if STATIC_DIR.exists():
-    print("Copying static assets...")
-    for item in STATIC_DIR.iterdir():
-        dest = OUTPUT_DIR / item.name
-        if item.is_dir():
-            shutil.copytree(item, dest, dirs_exist_ok=True)
-        else:
-            shutil.copy2(item, dest)
-
-# Helper: parse frontmatter (YAML between ---)
+# -------------------------------------------------------------------
+# Helpers
+# -------------------------------------------------------------------
 def parse_frontmatter(md_text):
+    """
+    Splits YAML frontmatter (between --- lines) from the body.
+    Returns (metadata_dict, body_text).
+    """
     if md_text.startswith("---"):
         _, fm, body = md_text.split("---", 2)
-        metadata = yaml.safe_load(fm)
+        metadata = yaml.safe_load(fm) or {}
         return metadata, body.strip()
     return {}, md_text
 
-# Build index
-index_links = []
+def render_page(title, content_html):
+    """
+    Wraps HTML content with header + footer templates.
+    Replaces {{ title }} in header.html with the page title.
+    """
+    header = (TEMPLATES_DIR / "header.html").read_text(encoding="utf-8")
+    footer = (TEMPLATES_DIR / "footer.html").read_text(encoding="utf-8")
 
-for md_file in CONTENT_DIR.glob("*.md"):
-    raw_text = md_file.read_text(encoding="utf-8")
+    header = header.replace("{{ title }}", title)
 
-    # Extract frontmatter + body
-    metadata, body = parse_frontmatter(raw_text)
-    html_content = markdown.markdown(body)
+    return f"{header}\n{content_html}\n{footer}"
 
-    title = metadata.get("title", md_file.stem.title())
-    date = metadata.get("date", "")
+# -------------------------------------------------------------------
+# Build
+# -------------------------------------------------------------------
+def build_site():
+    # Clean dist/
+    if OUTPUT_DIR.exists():
+        shutil.rmtree(OUTPUT_DIR)
+    OUTPUT_DIR.mkdir(parents=True)
 
-    # Wrap with header/footer
-    page_html = f"{header}\n<h1>{title}</h1>\n{html_content}\n{footer}"
+    posts = []
 
-    # Output filename
-    out_file = OUTPUT_DIR / f"{md_file.stem}.html"
-    out_file.write_text(page_html, encoding="utf-8")
+    # Process Markdown files into HTML pages
+    for md_file in CONTENT_DIR.glob("*.md"):
+        raw_text = md_file.read_text(encoding="utf-8")
+        metadata, body = parse_frontmatter(raw_text)
 
-    # Add to index
-    index_links.append(
-        f'<li><a href="{out_file.name}">{title}</a> {date}</li>'
-    )
+        html_body = markdown.markdown(body)
+        title = metadata.get("title", "Untitled")
 
-# Write index.html
-index_html = f"{header}\n<h1>Posts</h1>\n<ul>{''.join(index_links)}</ul>\n{footer}"
-(OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
+        page_html = render_page(title, html_body)
 
-print("Site built in 'dist/' folder")
+        output_file = OUTPUT_DIR / f"{md_file.stem}.html"
+        output_file.write_text(page_html, encoding="utf-8")
+
+        posts.append({"title": title, "file": f"{md_file.stem}.html", "date": metadata.get("date", "")})
+
+    # Build index.html
+    posts.sort(key=lambda x: x["date"], reverse=True)
+    index_content = "<h2>Posts</h2>\n<ul>"
+    for post in posts:
+        index_content += f'<li><a href="{post["file"]}">{post["title"]}</a> {post["date"]}</li>'
+    index_content += "</ul>"
+
+    index_html = render_page("The Original JC", index_content)
+    (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
+
+    # Copy static files
+    if STATIC_DIR.exists():
+        shutil.copytree(STATIC_DIR, OUTPUT_DIR / "static", dirs_exist_ok=True)
+
+    print("Site built into dist/")
+
+if __name__ == "__main__":
+    build_site()
