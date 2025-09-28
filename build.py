@@ -63,7 +63,7 @@ for md_file in CONTENT_DIR.glob("*.md"):
     )
 
 # Write index.html
-index_html = f"{header}\n<h1>My Blog</h1>\n<ul>{''.join(index_links)}</ul>\n{footer}"
+index_html = f"{header}\n<h1>Posts</h1>\n<ul>{''.join(index_links)}</ul>\n{footer}"
 (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
 
 print("Site built in 'dist/' folder")
