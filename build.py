@@ -34,6 +34,11 @@ def render_page(title, content_html):
 
     return f"{header}\n{content_html}\n{footer}"
 
+def adjust_image_paths(html: str) -> str:
+    # Prepend "static/" if the path doesn’t already start with http or static/
+    return html.replace('src="', 'src="static/')
+
+
 # -------------------------------------------------------------------
 # Build
 # -------------------------------------------------------------------
@@ -51,6 +56,7 @@ def build_site():
         metadata, body = parse_frontmatter(raw_text)
 
         html_body = markdown.markdown(body)
+        html_body = adjust_image_paths(html_body)
         title = metadata.get("title", "Untitled")
 
         page_html = render_page(title, html_body)
