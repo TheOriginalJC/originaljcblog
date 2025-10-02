@@ -1,59 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
   <title>Hello World</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-    }
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
 
-    header, footer {
-      text-align: center;
-      padding: 1rem;
-      background: #f5f5f5;
-    }
+/* Always reserve scrollbar space so header/footer don't shift */
+html {
+  overflow-y: scroll;
+}
 
-    nav a {
-      margin: 0 0.5rem;
-      text-decoration: none;
-      color: #007acc;
-    }
+header, footer {
+  text-align: center;
+  padding: 1rem;
+  background: #f5f5f5;
+}
 
-    nav a:hover {
-      text-decoration: underline;
-    }
+nav a {
+  margin: 0 0.5rem;
+  text-decoration: none;
+  color: #007acc;
+}
 
-    .content {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
+nav a:hover {
+  text-decoration: underline;
+}
 
-    h1, h2 {
-      color: #333;
-    }
+/* Main content wrapper */
+.content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 1rem auto;
-    }
+/* Reset default browser margins */
+h1, h2, h3, p, ul, ol {
+  margin: 1rem 0;
+  padding: 0;
+}
+
+/* Keep lists indented consistently */
+ul, ol {
+  padding-left: 1.25rem;
+}
+
+/* Headings color */
+h1, h2, h3 {
+  color: #333;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
   </style>
 </head>
 <body>
+  <!-- header background is full width; inner content uses same .content wrapper as posts -->
   <header>
-    <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Original JC</a></h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <!-- Add more links here if needed -->
-    </nav>
+      <div class="site-title">
+        <h1><a href="index.html" style="text-decoration:none;color:inherit;">The Original JC</a></h1>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <!-- add more links here -->
+      </nav>
   </header>
+
+  <!-- main page content (posts / index) uses the same .content class -->
   <main class="content">
 
 <h2>Introduction</h2>
@@ -80,6 +105,7 @@ I'll cover the aspects of IT that interest me, although I work mostly with Azure
 <p>This is a heavily condensed recollection to keep the post concise. I also had to think about other things and in some cases, even though I had limited knowledge in one area, I've used something because I wanted to learn more about it.</p>
 <p>This is the end, I hope it's not too disappointing.</p>
   </main>
+
   <footer>
     <p>&copy; 2025 Original JC Blog.</p>
   </footer>
