@@ -1,6 +1,7 @@
 ---
 title: "Azurecompute"
 date: 2023-09-22T16:39:34Z
+published: true
 ---
 All about Azure compute
 -----------------------

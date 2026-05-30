@@ -2,6 +2,7 @@ import shutil
 import markdown
 import yaml
 from pathlib import Path
+from datetime import datetime
 
 CONTENT_DIR = Path("content")
 OUTPUT_DIR = Path("dist")
@@ -39,14 +40,45 @@ def adjust_image_paths(html: str) -> str:
     return html.replace('src="', 'src="static/')
 
 
+def format_date(value):
+    if not value:
+        return ""
+    if isinstance(value, datetime):
+        return value.date().isoformat()
+    if isinstance(value, str):
+        try:
+            normalized = value.rstrip("Z")
+            return datetime.fromisoformat(normalized).date().isoformat()
+        except ValueError:
+            return value.split()[0]
+    return str(value)
+
+
+def is_published(metadata):
+    value = metadata.get("published", True)
+    if isinstance(value, str):
+        return value.strip().lower() not in ("false", "no", "0", "off")
+    return bool(value)
+
+
 # -------------------------------------------------------------------
 # Build
 # -------------------------------------------------------------------
+def clear_output_dir():
+    if not OUTPUT_DIR.exists():
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        return
+
+    for child in OUTPUT_DIR.iterdir():
+        if child.is_dir():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
+
+
 def build_site():
     # Clean dist/
-    if OUTPUT_DIR.exists():
-        shutil.rmtree(OUTPUT_DIR)
-    OUTPUT_DIR.mkdir(parents=True)
+    clear_output_dir()
 
     posts = []
 
@@ -54,6 +86,9 @@ def build_site():
     for md_file in CONTENT_DIR.glob("*.md"):
         raw_text = md_file.read_text(encoding="utf-8")
         metadata, body = parse_frontmatter(raw_text)
+
+        if not is_published(metadata):
+            continue
 
         html_body = markdown.markdown(body)
         html_body = adjust_image_paths(html_body)
@@ -70,7 +105,8 @@ def build_site():
     posts.sort(key=lambda x: x["date"], reverse=True)
     index_content = "<h2>Posts</h2>\n<ul>"
     for post in posts:
-        index_content += f'<li><a href="{post["file"]}">{post["title"]}</a> {post["date"]}</li>'
+        display_date = format_date(post["date"])
+        index_content += f'<li><a href="{post["file"]}">{post["title"]}</a> {display_date}</li>'
     index_content += "</ul>"
 
     index_html = render_page("The Original JC", index_content)
