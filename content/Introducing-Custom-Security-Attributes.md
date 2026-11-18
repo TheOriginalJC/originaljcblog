@@ -18,7 +18,7 @@ A better use though may be to record which project someone is working on, but wh
 
 Pre-Requisites
 --------------
-Before you can create and manage attribute sets, you will need the Attribute Definition Administrator or Attribute Assignment Administrator roles.  These can be assigned through Entra -> Manage-> Roles and Administrators section.  There is a bit of a gotcha where you have to click the role name, and not the juicy tick box competing for your attention.
+Before you get started, you will need the Attribute Definition Administrator or Attribute Assignment Administrator roles.  These can be assigned through Entra -> Manage-> Roles and Administrators section.  There is a bit of a gotcha where you have to click the role name, and not the juicy tick box competing for your attention.
 
 STATIC IMAGE OF ROLE LIST
 
@@ -26,7 +26,7 @@ Get past that and you will be on the Attribute Definition Administrator or Attri
 
 STATIC IMAGE OF USER SEARCH
 
-With the correct role assigned, you can create 
+With the correct role assigned you will now have the power to get started, but there is one other thing you need to do first.
 
 Creating Attribute Sets
 -----------------------
@@ -39,7 +39,7 @@ Managing Attribute Sets
 Following the creation of the 1st Attribute set, returning to Entra -> Manage -> Custom Security Attributes
 
 
-How is this different from tags?
+Isn't this just the same as tags?
 --------------------------------
 
 
