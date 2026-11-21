@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Intoducing Custom Security Attributes in Entra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Always reserve scrollbar space so header/footer don't shift */
+html {
+  overflow-y: scroll;
+}
+
+header, footer {
+  text-align: center;
+  padding: 1rem;
+  background: #f5f5f5;
+}
+
+nav a {
+  margin: 0 0.5rem;
+  text-decoration: none;
+  color: #007acc;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main content wrapper */
+.content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Reset default browser margins */
+h1, h2, h3, p, ul, ol {
+  margin: 1rem 0;
+  padding: 0;
+}
+
+/* Keep lists indented consistently */
+ul, ol {
+  padding-left: 1.25rem;
+}
+
+/* Headings color */
+h1, h2, h3 {
+  color: #333;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+  </style>
+</head>
+<body>
+  <!-- header background is full width; inner content uses same .content wrapper as posts -->
+  <header>
+      <div class="site-title">
+        <h1><a href="index.html" style="text-decoration:none;color:inherit;">The Original JC</a></h1>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <!-- add more links here -->
+      </nav>
+  </header>
+
+  <!-- main page content (posts / index) uses the same .content class -->
+  <main class="content">
+
+<h2>Introducing Custom Security Attributes in Entra</h2>
+<p>At the time of writing it's only 4 and a half weeks till Christmas, and all the children are asking Santa for the ability to save business attributes to their Entra Objects. You can tell them from me that letter to santa is wasted, because thanks to the magic of Custom Security Attributes you can not only assign that data to your Entra Objects already, you can also enforce fine grained control over access to Azure resources through Attribute Based Access Control (ABAC). A bona fide Christmas cracker!</p>
+<h2>So what are Custom Security Attributes anyway?</h2>
+<p>Custom Security Attributes are key-value pairs that can be assigned to Entra Objects such as users, groups, and applications.For example, if you want to record data such as an employee's hourly rate, you can create an attribute for that, assign it to the user, 
+and apply a value.</p>
+<p>A better use may be to record which project someone is working on. What if they are working on several projects at the same time?No problem, when creating your Custom Security Attributes, you have the option to allow single or multiple values to be assigned, unless you create it as a boolean, because then you won't know if you're coming or going.</p>
+<h2>Pre-Requisites</h2>
+<p>Before you get started, you will need the Attribute Definition Administrator or Attribute Assignment Administrator roles. These can be assigned through Entra -&gt; Manage -&gt; Roles and Administrators. There is a bit of a gotcha where you have to click the role name, and not the juicy tick box beside it begging for attention.</p>
+<p><img alt="A Custom Security Attribute gotcha&quot;" src="static/Custom-Security-Attributes-pt1/gotcha.png" /></p>
+<p>Get past that and you will be on the Attribute Definition Administrator or Attribute Assignment Administrator role screen where you can search for a user and assign the role.</p>
+<p><img alt="Search users to apply permissions&quot;" src="static/Custom-Security-Attributes-pt1/search-users.png" /></p>
+<p>Click Add assignments, search for the user again, then select and add them.</p>
+<p><img alt="Adding a user&quot;" src="static/Custom-Security-Attributes-pt1/add-user.png" /></p>
+<p>With the correct role assigned you will now have the power to get started, but there are a few housekeeping duties to carry out first.</p>
+<h2>Creating Attribute Sets</h2>
+<p>Before you can start creating and using Custom Security Attributes, you need to create an Attribute Set. This is a logical container for holding related Custom Security Attributes. You can create an Attribute set from from Entra -&gt; Manage -&gt; Custom Security Attributes.</p>
+<p><img alt="Custom Security Attribute set&quot;" src="static/Custom-Security-Attributes-pt1/new-attribute-set.png" /></p>
+<h2>Managing Attribute Sets</h2>
+<p>Following the creation of the 1st Attribute set, returning to Entra -&gt; Manage -&gt; Custom Security Attributes will show the attribute set in a list.</p>
+<p><img alt="Custom Security Attribute set list&quot;" src="static/Custom-Security-Attributes-pt1/attribute-set-list.png" /></p>
+<p>Click the finance attribute set (or whatever you want to create) to start adding attributes.</p>
+<p>In this example I've created a pay band attribute which is defined as a string and only accepts the predefined values "A","B","C", and "Superstar".</p>
+<p><img alt="Adding a Custom Security Attribute&quot;" src="static/Custom-Security-Attributes-pt1/add-attribute.png" /></p>
+<p>Attributes can only be type boolean, integer, or string. If you want to store a more complex value, you will need to store them strings and convert them in your own scripts or tools,</p>
+<h2>Isn't this just the same as tags?</h2>
+<p>It's a fairly similar concept, however, Custom Security Attributes are meta-data assigned to Entra objects, while tags are meta-data assigned to Azure resources. Both can be queried programmatically which makes them useful for automation, reporting, and governance.</p>
+<h2>Assigning values to users</h2>
+<p>With the initial set up complete, we're finally ready to start assigning Custom Security Attributes to users. This is simply a case of selecting the user in Entra, clicking Custom Security Attributes on the left, Add Assignment, then selecting the attribute you want to assign and it's settings.</p>
+<p><img alt="Assigning Custom Security Attributes to users&quot;" src="static/Custom-Security-Attributes-pt1/assign-attributes.png" /></p>
+<p>As you might expect, returning to the same area after assigning an Attribute will list all previously assigned attributes, with the option to update or remove them.</p>
+<h2>To be continued</h2>
+<p>In this post, I've introduced the idea of Custom Security Attributes, what you need before getting started, and how to set them up and assign them to users. In the next post I'll go through how to query Custom Security Attributes using Microsoft Graph and Powershell to make it easier to report and automate their use.</p>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Original JC Blog.</p>
+  </footer>
+</body>
+</html>
