@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy project files into the container
 COPY . /app
 
-# Install dependencies (markdown library)
-RUN pip install --no-cache-dir markdown pyyaml
+# Install the hash-locked dependencies
+RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
 
 # Default command to build site
-CMD ["python", "build.py"]
+ CMD ["python", "build_blog.py"]

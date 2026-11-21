@@ -90,7 +90,7 @@ def build_site():
         if not is_published(metadata):
             continue
 
-        html_body = markdown.markdown(body)
+        html_body = markdown.markdown(body, extensions=["fenced_code"])
         html_body = adjust_image_paths(html_body)
         title = metadata.get("title", "Untitled")
 
