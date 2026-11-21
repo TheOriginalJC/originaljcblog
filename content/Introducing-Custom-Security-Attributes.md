@@ -9,15 +9,19 @@ At the time of writing it's only 4 and a half weeks till Christmas, and all the 
 
 So what are Custom Security Attributes anyway?
 ---------------------------------------------
-Custom Security Attributes are key-value pairs that can be assigned to Entra Objects such as users, groups, and applications.For example, if you want to record data such as an employee's hourly rate, you can create an attribute for that, assign it to the user, 
-and apply a value.
+Custom Security Attributes are key-value pairs that can be assigned to Entra Objects such as users and service principals. For example, if you want to record data such as an employee's hourly rate, you can create an attribute for that, assign it to the user, and apply a value.
 
-A better use may be to record which project someone is working on. What if they are working on several projects at the same time?No problem, when creating your Custom Security Attributes, you have the option to allow single or multiple values to be assigned, unless you create it as a boolean, because then you won't know if you're coming or going.
+A better use may be to record which project someone is working on. What if they are working on several projects at the same time No problem, when creating your Custom Security Attributes, you have the option to allow single or multiple values to be assigned, unless you create it as a Boolean, because then you won't know if you're coming or going.
 
 
-Pre-Requisites
+Prerequisites
 --------------
-Before you get started, you will need the Attribute Definition Administrator or Attribute Assignment Administrator roles. These can be assigned through Entra -> Manage -> Roles and Administrators. There is a bit of a gotcha where you have to click the role name, and not the juicy tick box beside it begging for attention.
+Before you get started, you will need the roles
+
+- Attribute Definition Administrator to create Custom Attributes.
+- Attribute Assignment Administrator to assign them.
+
+These can be assigned through Entra -> Manage -> Roles and Administrators. There is a bit of a gotcha where you have to click the role name, and not the juicy tick box beside it begging for attention.
 
 ![A Custom Security Attribute gotcha"](Custom-Security-Attributes-pt1/gotcha.png)
 
@@ -33,27 +37,27 @@ With the correct role assigned you will now have the power to get started, but t
 
 Creating Attribute Sets
 -----------------------
-Before you can start creating and using Custom Security Attributes, you need to create an Attribute Set. This is a logical container for holding related Custom Security Attributes. You can create an Attribute set from from Entra -> Manage -> Custom Security Attributes.
+Before you can start creating and using Custom Security Attributes, you need to create an Attribute Set (which requires the Attribute Definition Administrator role). This is a logical container for holding related Custom Security Attributes. You can create an Attribute set from Entra -> Manage -> Custom Security Attributes.
 
 ![Custom Security Attribute set"](Custom-Security-Attributes-pt1/new-attribute-set.png)
 
 Managing Attribute Sets
 -----------------------
-Following the creation of the 1st Attribute set, returning to Entra -> Manage -> Custom Security Attributes will show the attribute set in a list.
+Following the creation of the first Attribute set, returning to Entra -> Manage -> Custom Security Attributes will show the Attribute set in a list.
 
 ![Custom Security Attribute set list"](Custom-Security-Attributes-pt1/attribute-set-list.png)
 
-Click the finance attribute set (or whatever you want to create) to start adding attributes.
+Select the finance Attribute set (or whatever you want to create) to start adding attributes.
 
 In this example I've created a pay band attribute which is defined as a string and only accepts the predefined values "A","B","C", and "Superstar".
 
 ![Adding a Custom Security Attribute"](Custom-Security-Attributes-pt1/add-attribute.png)
 
-Attributes can only be type boolean, integer, or string. If you want to store a more complex value, you will need to store them strings and convert them in your own scripts or tools,
+Attributes can only be type Boolean, Integer, or String. If you want to store a more complex value, you'll need to store them strings and convert them in your own scripts or tools
 
 Isn't this just the same as tags?
 --------------------------------
-It's a fairly similar concept, however, Custom Security Attributes are meta-data assigned to Entra objects, while tags are meta-data assigned to Azure resources. Both can be queried programmatically which makes them useful for automation, reporting, and governance.
+It's a fairly similar concept, however, Custom Security Attributes are metadata assigned to Entra objects, while tags are metadata assigned to Azure resources. Both can be queried programmatically which makes them useful for automation, reporting, and governance.
 
 Assigning values to users
 -------------------------
@@ -65,5 +69,5 @@ As you might expect, returning to the same area after assigning an Attribute wil
 
 To be continued
 ---------------
-In this post, I've introduced the idea of Custom Security Attributes, what you need before getting started, and how to set them up and assign them to users. In the next post I'll go through how to query Custom Security Attributes using Microsoft Graph and Powershell to make it easier to report and automate their use.
+In this post, I've introduced the idea of Custom Security Attributes, what you need before getting started, and how to set them up and assign them to users. In the next post I'll go through how to query Custom Security Attributes using Microsoft Graph and PowerShell to make it easier to report and automate their use.
 
