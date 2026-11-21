@@ -1,5 +1,5 @@
 ---
-title: "Intoducing Custom Security Attributes in Entra"
+title: "Introducing Custom Security Attributes in Entra"
 date: 2026-11-21T00:00:00Z
 published: true
 ---
